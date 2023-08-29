@@ -28,7 +28,7 @@ Key features of *AI Studio* include:
 To run the Simple scenes which demonstrate the core architecture, the following licenses must be obtained, and accompanying Unity packages must be installed.
 
 ### *AI Studio*
-* Download and install the SRI *AI Studio* package from the [Unity Asset Store](https://assetstore.unity.com/) or via [GitHub]() or [from here](https://1drv.ms/u/s!ArFvxkQ02ZoSh_MtXqh-nsVR9DXO-A?e=gknpNx).
+* Download and install the SRI *AI Studio* package from the [Unity Asset Store](https://assetstore.unity.com/) or via [GitHub](https://github.com/Dracarys-Interactive/AIStudio.git) or [from here](https://1drv.ms/u/s!ArFvxkQ02ZoSidNi7o1DlpkHlpA2Kw?e=ezwyPd).
 * You may get *missing Prefab* errors due to the dependencies *.../Prefabs/Environment.pref* has on the CITY package, but this can be ignored when running the Simple scenes. 
 
 ### OpenAI
@@ -61,7 +61,8 @@ To run the City scenes which include a city game world and avatar characters, th
 * The Cinemachine package may be imported via the Unity Package Manager through the Unity Registry.
 * Add the *Scripting Define Symbol* **USE_CINEMACHINE** to the *Player Project Settings* under *Script Compilation*.
 
-**NOTE! Unity Starter Assets First and Third-person package scripts are included in the AI Studio package so the following steps to import and modify these packages are for information only. It should not be necessary to import these packages.**
+### Unity Starter Assets
+**NOTE! Unity Starter Assets First and Third-person package scripts are included in the AI Studio package so the following steps to import and modify these packages are for information only. It should not be necessary to import these packages. However you will need to add the *Scripting Define Symbol* STARTER_ASSETS_PACKAGES_CHECKED to the *Player Project Settings* under *Script Compilation*.**
 
 ### Starter Assets – Third Person Character Controller
 * The Unity Asset Store [Starter Assets - Third Person Character Controller](https://assetstore.unity.com/packages/essentials/starter-assets-third-person-character-controller-urp-196526), a free asset, must be imported and a minor C# script change must be applied to make the controller work with UMA
@@ -84,7 +85,7 @@ To run the City scenes which include a city game world and avatar characters, th
 * **NOTE!** You will also need to download and install the *OneClick UMA DCS* add-on package [from here](https://crazyminnowstudio.com/unity-3d/lip-sync-salsa/downloads/).
 * SALSA will *automatically* add the *Scripting Define Symbol* **CMS_SALSA** to the *Player Project Settings* under *Script Compilation*.
 ### Mixamo Animations
-* Import a set of Mixamo animations [from here](https://1drv.ms/u/s!ArFvxkQ02ZoSh_MsOATu7SwhjtK5_Q?e=SefCZu).
+* Import a set of Mixamo animations [from here](https://1drv.ms/u/s!ArFvxkQ02ZoSjMgqJUb-9k_dxiaMKw?e=9tGPkr).
 
 This [YouTube video](https://youtu.be/IrRu-i-r3As) demonstrates how to extend the Unity project configured to run the Simple scenes to run the City scenes with the exception of *Avatar Wars* which will be covered in the next section.
 
