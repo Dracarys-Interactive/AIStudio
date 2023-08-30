@@ -4,9 +4,11 @@
 # Welcome to *AI Studio*!
 * [Introduction](#introduction)
 * [Using *AI Studio*](#using-ai-studio)
+* [*AI Studio* Dependencies](#ai-studio-dependencies)
 * [Running the Simple Scenes](#running-the-simple-scenes)
 * [Running the City Scenes](#running-the-city-scenes)
 * [Running Avatar Wars](#running-avatar-wars)
+* [Support](#support)
 
 ## Introduction
 *AI Studio* provides a flexible [open-source framework](https://github.com/Skylands-Research-Institute/AI-Studio) for integrating [Unity](https://unity.com/) games and applications with AI systems that enable real-time, speech-driven dialogue and actions. The core framework may be integrated with your choice of speech and text recognition and generation models and APIs.
@@ -23,6 +25,28 @@ Key features of *AI Studio* include:
 
 ## Using *AI Studio*
 *AI Studio* has several dependencies that require licensing and importing before all the sample scenes can be compiled and run. The target platform for running sample scenes is a Windows 10 or later PC running Unity 2020.3 or later. There are two sets of sample scenes included in *AI Studio*. “Simple” scenes demonstrate the core architecture and “City” scenes with additional dependencies add a game world and humanoid avatars. One “City” scene, *Avatar Wars*, adds an additional dependency on [Ready Player Me](https://readyplayer.me/).
+
+## *AI Studio* Dependencies
+The *AI Studio* package itself includes no third-party content except for a couple of Unity Starter Asset scripts. However, to run the sample scenes in *AI Studio*, several third-party licenses and packages must be acquired and installed by the user. These packages are not included in the *AI Studio* package and until installed the sample scenes will contain objects with missing component scripts. Once the required packages are installed, these missing component script errors will be resolved. Instructions for acquiring and installing these packages are included in this README and are also documented in a set of [YouTube videos](https://www.youtube.com/playlist?list=PLqvEk6ZnckUDIadG7NqBthi1HLx0I-1yL). The complete set of dependencies is shown below.
+
+To run the “Simple” sample scenes, the following dependencies must be satisfied:
+* An OpenAI API key.
+* Integration for the OpenAI API in Unity. This is an open-source Unity package hosted in GitHub governed by the MIT license.
+* A subscription key for the Microsoft Azure Speech Service.
+* The Microsoft Cognitive Services Speech SDK for Unity package.
+
+To run the “City” sample scenes except for “Avatar Wars”, these additional packages must be installed:
+* The Unity Cinemachine package from the Unity Registry.
+* The UMA 2 Unity Multipurpose Avatar package from the Unity Asset Store.
+* The CITY package from the Unity Asset Store.
+* The SALSA Lip Sync Suite from Unity Asset Store.
+* The SALSA Lip Sync Suite OneClick UMA DCS package from the Crazy Minnow Studio website.
+* A package of several Mixamo animations.
+
+To run the “City” sample scene “Avatar Wars”, these additional dependencies must be satisfied:
+* The Ready Player Me Unity SDK package.
+
+The next section describes in more detail how to satisfy these dependencies and run the *AI Studio* sample scenes.
 
 ## Running the Simple Scenes
 To run the Simple scenes which demonstrate the core architecture, the following licenses must be obtained, and accompanying Unity packages must be installed.
@@ -98,3 +122,6 @@ The scene *City Scene Avatar Wars 2 NPC* requires the installation of *Ready Pla
 * Import an RPM avatar [from here](https://1drv.ms/u/s!ArFvxkQ02ZoSh_MuEU9udKCNhTwmyg?e=VeciEY).
 
 This [YouTube video](https://youtu.be/Y9N1owUCRYs) demonstrates how to extend the Unity project configured to run the City scenes to run  *Avatar Wars*.
+
+## Support
+If you have questions or issues with *AI Studio* please visit the [Dracarys Interactive website](http://dracarysinteractive.com) and use the *Contact* page to get in touch with us.
