@@ -1,6 +1,8 @@
+using Microsoft.CognitiveServices.Speech;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 namespace DracarysInteractive.AIStudio
 {
@@ -9,6 +11,7 @@ namespace DracarysInteractive.AIStudio
     {
         public bool recognizeContinuously = true;
         public GameObject warningText;
+        public bool recognize = false;
 
         protected override void Awake()
         {
@@ -48,8 +51,9 @@ namespace DracarysInteractive.AIStudio
                 warningText.SetActive(!recognizeContinuously);
             }
 
-            if (!recognizeContinuously && Input.GetKeyDown(KeyCode.Backspace))
+            if (!recognizeContinuously && recognize)
             {
+                recognize = false;
                 Implementation.Recognize(() =>
                 {
                     DialogueActionManager.Instance.EnqueueAction(new StartSpeechRecognition(DialogueManager.Instance.GetPlayer()));
@@ -60,5 +64,13 @@ namespace DracarysInteractive.AIStudio
                 });
             }
         }
+        public void OnSpeak(CallbackContext context)
+        {
+            Log("enter OnSpeak", LogLevel.debug);
+
+            if (context.performed)
+                recognize = true;
+        }
+
     }
 }

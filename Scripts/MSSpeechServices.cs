@@ -5,7 +5,9 @@ using Microsoft.CognitiveServices.Speech.Audio;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.Android;
 
 namespace DracarysInteractive.AIStudio
 {
@@ -25,6 +27,12 @@ namespace DracarysInteractive.AIStudio
         private string defaultVoice = "en-US-JennyNeural";
         private Action _onStartSpeechRecognition;
         private Action<string> _onSpeechRecognized;
+
+#if PLATFORM_ANDROID
+        // Required to manifest microphone permission, cf.
+        // https://docs.unity3d.com/Manual/android-manifest.html
+        private Microphone mic;
+#endif
 
         public bool RecognitionStarted
         {
@@ -60,6 +68,15 @@ namespace DracarysInteractive.AIStudio
             // recognizer = new SpeechRecognizer(config, audioInput);
 
             recognizer = new SpeechRecognizer(config);
+
+#if PLATFORM_ANDROID
+            // Request to use the microphone, cf.
+            // https://docs.unity3d.com/Manual/android-RequestingPermissions.html
+            if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            {
+                Permission.RequestUserPermission(Permission.Microphone);
+            }
+#endif
 
             recognizer.Canceled += (s, e) =>
             {
