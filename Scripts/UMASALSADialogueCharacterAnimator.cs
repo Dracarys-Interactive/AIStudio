@@ -18,6 +18,7 @@ namespace DracarysInteractive.AIStudio
         public float emoteDuration = 4f;
         public int talkingAnimations = 3;
         public float probabilityOfTalkingAnimation = .2f;
+        public Transform lookAtTransform;
 
         private List<(string partial, string name, Action<DialogueCharacter, string, string> action)> _animations = new List<(string partial, string name, Action<DialogueCharacter, string, string> action)>();
         private bool _moving = false;
@@ -97,17 +98,20 @@ namespace DracarysInteractive.AIStudio
         public void OnStartSpeaking(DialogueCharacter character, DialogueCharacter speaker)
         {
 #if CMS_SALSA
-            Eyes eyes = character.GetComponent<Eyes>();
+             Eyes eyes = character.GetComponent<Eyes>();
 
             if (character == speaker)
             {
-                eyes.lookTarget = null;
-                eyes.LookForward();
-                
+                if (!lookAtTransform)
+                {
+                    eyes.lookTarget = null;
+                    eyes.LookForward();
+                }
+
                 if (Random.value < probabilityOfTalkingAnimation)
                     talking(character, "talking", "talking");
             }
-            else
+            else if (!lookAtTransform)
             {
                 eyes.lookTarget = speaker.lookAtTarget;
             }
@@ -117,6 +121,9 @@ namespace DracarysInteractive.AIStudio
         public void OnEndSpeaking(DialogueCharacter character, DialogueCharacter speaker)
         {
 #if CMS_SALSA
+            if (lookAtTransform)
+                return;
+
             Eyes eyes = character.GetComponent<Eyes>();
 
             eyes.lookTarget = null;
@@ -127,6 +134,9 @@ namespace DracarysInteractive.AIStudio
         public void OnStartSpeechRecognition(DialogueCharacter character, DialogueCharacter speaker)
         {
 #if CMS_SALSA
+            if (lookAtTransform)
+                return;
+
             Eyes eyes = character.GetComponent<Eyes>();
 
             if (character == speaker)
@@ -144,14 +154,25 @@ namespace DracarysInteractive.AIStudio
         public void OnSpeechRecognized(DialogueCharacter character, DialogueCharacter player)
         {
 #if CMS_SALSA
+            if (lookAtTransform)
+                return;
+
             if (character == player)
             {
-                Eyes eyes = player.GetComponent<Eyes>();
+                Eyes eyes = character.GetComponent<Eyes>();
 
                 eyes.lookTarget = null;
                 eyes.LookForward();
             }
 #endif
+        }
+
+        void Update()
+        {
+            Eyes eyes = GetComponent<Eyes>();
+
+            if (eyes && lookAtTransform)
+                eyes.lookTarget = lookAtTransform;
         }
     }
 }
