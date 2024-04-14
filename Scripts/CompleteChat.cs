@@ -87,6 +87,12 @@ namespace DracarysInteractive.AIStudio
                 string[] actions = StringHelper.ExtractStringsInParentheses(subcompletion);
 
                 DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions));
+
+                foreach (string tag in DialogueManager.Instance.tags)
+                {
+                    string[] taggedStrings = StringHelper.ExtractTaggedStrings(subcompletion, tag);
+                    DialogueActionManager.Instance.EnqueueAction(new ProcessTags(npc, tag, taggedStrings));
+                }
             }
 
             if (!DialogueManager.Instance.HasPlayer)

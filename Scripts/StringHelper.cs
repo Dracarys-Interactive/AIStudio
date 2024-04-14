@@ -6,6 +6,38 @@ namespace DracarysInteractive.AIStudio
 {
     public static class StringHelper
     {
+        public static string[] ExtractTaggedStrings(string input, string tag)
+        {
+            List<string> extractedStrings = new List<string>();
+
+            // Regular expression pattern to match the XML open and closing tag
+            string pattern = $@"<{tag}[^>]*>(.*?)<\/{tag}>";
+
+            // Match the pattern in the input string
+            MatchCollection matches = Regex.Matches(input, pattern);
+
+            // Iterate through the matches and extract the text inside the XML elements
+            foreach (Match match in matches)
+            {
+                // Get the text inside the XML element without the opening and closing tag
+                string extractedString = match.Groups[1].Value;
+                extractedStrings.Add(extractedString);
+            }
+
+            return extractedStrings.ToArray();
+        }
+
+        public static string RemoveTaggedStrings(string input, string tag)
+        {
+            // Regular expression pattern to match the XML open and closing tag
+            string pattern = $@"<{tag}[^>]*>(.*?)<\/{tag}>";
+
+            // Remove all occurrences of the pattern from the input string
+            string result = Regex.Replace(input, pattern, "");
+
+            return result;
+        }
+
         public static string[] ExtractStringsInParentheses(string input)
         {
             // Define the regular expression pattern

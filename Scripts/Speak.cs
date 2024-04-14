@@ -14,6 +14,10 @@ namespace DracarysInteractive.AIStudio
         {
             DialogueActionManager.Instance.EnqueueAction(new StartSpeechSynthesis(data));
             string text = StringHelper.Remove(StringHelper.RemoveStringsInParentheses(data.text), "^.*:");
+            foreach (string tag in DialogueManager.Instance.tags)
+            {
+                text = StringHelper.RemoveTaggedStrings(text, tag);
+            }
             SpeechServices.Instance.Speak(text, data.character.character.voice, playAudio, onSynthesisCompleted);
         }
 

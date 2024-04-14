@@ -13,6 +13,7 @@ namespace DracarysInteractive.AIStudio
         public DialogueSO activeDialogue;
         public UnityEvent ClosingPromptInjected;
         public bool dialogueClosed = false;
+        public string[] tags;
 
         private DialogueCharacter _player;
         private Dictionary<string, DialogueCharacter> _NPCs = new Dictionary<string, DialogueCharacter>();
