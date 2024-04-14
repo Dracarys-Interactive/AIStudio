@@ -9,7 +9,8 @@ namespace DracarysInteractive.AIStudio
     [RequireComponent(typeof(ISpeechServices))]
     public class SpeechServices : Pluggable<SpeechServices, ISpeechServices>
     {
-        public bool recognizeContinuously = true;
+        public bool recognizeContinuously = false;
+        public bool recognizeAfterEndSpeaking = false;
         public GameObject warningText;
         public bool recognize = false;
 
@@ -18,6 +19,14 @@ namespace DracarysInteractive.AIStudio
             // Force instantiation of plug-in otherwise we
             // might call GetComponent in a subthread.
             var bootImplementation = Implementation;
+
+            if (recognizeAfterEndSpeaking)
+                DialogueCharacter.onEndSpeaking.AddListener(OnEndSpeaking);
+        }
+
+        private void OnEndSpeaking(DialogueCharacter arg0)
+        {
+            recognize = true;
         }
 
         public void StartContinuousRecognizing(Action onStartSpeechRecognition, Action<string> onSpeechRecognized)
@@ -32,9 +41,14 @@ namespace DracarysInteractive.AIStudio
 
         public void Recognize(Action onStartSpeechRecognition, Action<string> onSpeechRecognized)
         {
-            Implementation.Recognize(onStartSpeechRecognition, onSpeechRecognized);
+            Implementation.Recognize(onStartSpeechRecognition, onSpeechRecognized, onSpeechNotRecognized);
         }
-     
+
+        private void onSpeechNotRecognized()
+        {
+            recognize = true;
+        }
+
         public void Speak(string text, string voice, Action<float[]> onDataReceived, Action onSynthesisCompleted)
         {
             Implementation.Speak(text, voice, onDataReceived, onSynthesisCompleted);
@@ -61,9 +75,14 @@ namespace DracarysInteractive.AIStudio
                 (string text) =>
                 {
                     DialogueActionManager.Instance.EnqueueAction(new SpeechRecognized(DialogueManager.Instance.GetPlayer(), text));
+                },
+                () =>
+                {
+                    recognize = true;
                 });
             }
         }
+      
         public void OnSpeak(CallbackContext context)
         {
             Log("enter OnSpeak", LogLevel.debug);

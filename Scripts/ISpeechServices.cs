@@ -7,7 +7,7 @@ namespace DracarysInteractive.AIStudio
     {
         void StartContinuousRecognizing(Action onStartSpeechRecognition, Action<string> onSpeechRecognized);
         void StopContinuousRecognizing();
-        void Recognize(Action onStartSpeechRecognition, Action<string> onSpeechRecognized);
+        void Recognize(Action onStartSpeechRecognition, Action<string> onSpeechRecognized, Action onSpeechNotRecognized);
         void Speak(string text, string voice, Action<float[]> onDataReceived, Action onSynthesisCompleted);
         float SampleRate();
     }
