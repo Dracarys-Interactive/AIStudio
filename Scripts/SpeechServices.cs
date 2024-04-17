@@ -51,6 +51,7 @@ namespace DracarysInteractive.AIStudio
 
         public void Speak(string text, string voice, Action<float[]> onDataReceived, Action onSynthesisCompleted)
         {
+            Log($"Speak: {text}");
             Implementation.Speak(text, voice, onDataReceived, onSynthesisCompleted);
         }
         public float SampleRate()
@@ -74,10 +75,12 @@ namespace DracarysInteractive.AIStudio
                 },
                 (string text) =>
                 {
+                    Log($"recognized speech: {text}");
                     DialogueActionManager.Instance.EnqueueAction(new SpeechRecognized(DialogueManager.Instance.GetPlayer(), text));
                 },
                 () =>
                 {
+                    Log("speech NOT recognized, retry...");
                     recognize = true;
                 });
             }

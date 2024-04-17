@@ -13,6 +13,12 @@ namespace DracarysInteractive.AIStudio
 
         public override void Invoke()
         {
+            if (data.result.Length == 0)
+            {
+                if (onCompletion != null)
+                    onCompletion.Invoke();
+            }
+
             AudioClip audioClip = AudioClip.Create(
                   data.character.character + " Speech",
                   data.result.Length,
