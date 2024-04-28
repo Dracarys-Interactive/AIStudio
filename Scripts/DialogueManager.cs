@@ -32,11 +32,13 @@ namespace DracarysInteractive.AIStudio
         private void onSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             dialogueClosed = false;
-            DialogueModel.Instance.Clear(); // flag in DialogeSO?
-            DialogueActionManager.Instance.Clear();
 
             if (activeDialogue)
+            {
+                DialogueModel.Instance.Clear(); // flag in DialogeSO?
+                DialogueActionManager.Instance.Clear();
                 StartDialogue(activeDialogue);
+            }
         }
 
         private void OnClosingPromptInjected()
