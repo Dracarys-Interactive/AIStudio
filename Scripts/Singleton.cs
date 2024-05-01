@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace DracarysInteractive.AIStudio
@@ -21,6 +22,9 @@ namespace DracarysInteractive.AIStudio
         private static bool _instantiating = false;
 
         private static bool AppQuitting { get; set; } = false;
+
+        [SerializeField] private TextMeshProUGUI _console;
+        [SerializeField] private LogLevel _consoleLogLevel = LogLevel.error;
 
         /// <summary>
         /// Singleton instance
@@ -99,6 +103,11 @@ namespace DracarysInteractive.AIStudio
                     Debug.LogWarning(msg);
                 else
                     Debug.LogError(msg);
+            }
+
+            if (_console && level >= _consoleLogLevel)
+            {
+                _console.text = msg;
             }
         }
     }
