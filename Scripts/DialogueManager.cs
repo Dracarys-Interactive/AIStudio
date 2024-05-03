@@ -11,9 +11,10 @@ namespace DracarysInteractive.AIStudio
     public class DialogueManager : Singleton<DialogueManager>
     {
         public DialogueSO activeDialogue;
-        public UnityEvent ClosingPromptInjected;
+        public UnityEvent closingPromptInjected;
         public bool dialogueClosed = false;
         public string[] tags;
+        public UnityEvent startingDialogue;
 
         private DialogueCharacter _player;
         private Dictionary<string, DialogueCharacter> _NPCs = new Dictionary<string, DialogueCharacter>();
@@ -35,7 +36,7 @@ namespace DracarysInteractive.AIStudio
 
             if (activeDialogue)
             {
-                DialogueModel.Instance.Clear(); // flag in DialogeSO?
+                DialogueModel.Instance.Clear(); // flag in DialogueSO?
                 DialogueActionManager.Instance.Clear();
                 StartDialogue(activeDialogue);
             }
@@ -49,7 +50,7 @@ namespace DracarysInteractive.AIStudio
         private void OnClosingPrompt()
         {
             dialogueClosed = true;
-            ClosingPromptInjected.Invoke();
+            closingPromptInjected.Invoke();
         }
 
         public void StartDialogue(Dropdown dropdown)
@@ -61,6 +62,8 @@ namespace DracarysInteractive.AIStudio
 
         public void StartDialogue(DialogueSO dialogue)
         {
+            startingDialogue.Invoke();
+
             DialogueActionManager.Instance.Clear();
 
             activeDialogue = dialogue;
