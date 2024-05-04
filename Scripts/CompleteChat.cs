@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 namespace DracarysInteractive.AIStudio
 {
-    public class CompleteChat : DialogueAction<(string text, bool prompt)>
+    public class CompleteChat : DialogueAction<(string text, bool prompt, Action<string> onResponse)>
     {
         private const int MAX_RETRIES = 2;
         private int retries = 0;
@@ -13,9 +13,9 @@ namespace DracarysInteractive.AIStudio
         {
         }
 
-        public CompleteChat(string text, bool prompt = false, Action onCompletion = null) : base(onCompletion)
+        public CompleteChat(string text, bool prompt = false, Action onCompletion = null, Action<string> onResponse = null) : base(onCompletion)
         {
-            data = (text, prompt);
+            data = (text, prompt, onResponse);
         }
 
         public override void Invoke()
@@ -53,11 +53,28 @@ namespace DracarysInteractive.AIStudio
 
         public void OnChatCompletion(string completion)
         {
+            if (data.onResponse != null)
+            {
+                data.onResponse.Invoke(completion);
+            }
+
             retries = 0;
 
             Log($"OnChatCompletion: completion={completion}");
 
+            foreach (string tag in DialogueManager.Instance.tags)
+            {
+                string[] taggedStrings = StringHelper.ExtractTaggedStrings(completion, tag);
+                if (taggedStrings.Length > 0)
+                {
+                    DialogueActionManager.Instance.EnqueueAction(new ProcessTags(null, tag, taggedStrings));
+                    completion = StringHelper.RemoveTaggedStrings(completion, tag);
+                    Log($"OnChatCompletion: completion after tag {tag} processing={completion}");
+                }
+            }
+
             string[] subcompletions = StringHelper.SplitCompletion(completion);
+            string name = null;
 
             for (int j = 0; j < subcompletions.Length; j++)
             {
@@ -68,8 +85,7 @@ namespace DracarysInteractive.AIStudio
 
                 Log($"CompleteChat.OnChatCompletion subcompletion=\"{subcompletion}\"");
 
-                string name = null;
-                int i = subcompletion.IndexOf(':');
+                int i = subcompletion.IndexOf("::");
 
                 if (i != -1)
                 {
@@ -80,19 +96,12 @@ namespace DracarysInteractive.AIStudio
 
                 if (npc == null)
                 {
-                    Log($"CompleteChat.OnChatCompletion model responded as player {name}");
+                    Log($"CompleteChat.OnChatCompletion model responded as player {name}", Singleton<DialogueActionManager>.LogLevel.warning);
                     continue;
                 }
 
                 string[] actions = StringHelper.ExtractStringsInParentheses(subcompletion);
-
                 DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions));
-
-                foreach (string tag in DialogueManager.Instance.tags)
-                {
-                    string[] taggedStrings = StringHelper.ExtractTaggedStrings(subcompletion, tag);
-                    DialogueActionManager.Instance.EnqueueAction(new ProcessTags(npc, tag, taggedStrings));
-                }
             }
 
             if (!DialogueManager.Instance.HasPlayer)

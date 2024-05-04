@@ -33,11 +33,13 @@ namespace DracarysInteractive.AIStudio
         {
             get
             {
+                /*
                 if (AppQuitting)
                 {
                     Debug.LogWarning($"No {nameof(Singleton<T>)} returned because application is quiting");
                     return null;
                 }
+                */
                 TryCreateSingleton(_instance, ref _instance);
                 return _instance;
             }

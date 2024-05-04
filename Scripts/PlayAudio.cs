@@ -18,21 +18,23 @@ namespace DracarysInteractive.AIStudio
                 if (onCompletion != null)
                     onCompletion.Invoke();
             }
+            else
+            {
+                AudioClip audioClip = AudioClip.Create(
+                      data.character.character + " Speech",
+                      data.result.Length,
+                      1,
+                      (int)SpeechServices.Instance.SampleRate(),
+                      false);
+                audioClip.SetData(data.result, 0);
 
-            AudioClip audioClip = AudioClip.Create(
-                  data.character.character + " Speech",
-                  data.result.Length,
-                  1,
-                  (int)SpeechServices.Instance.SampleRate(),
-                  false);
-            audioClip.SetData(data.result, 0);
+                AudioSource audioSource = data.character.GetComponent<AudioSource>();
 
-            AudioSource audioSource = data.character.GetComponent<AudioSource>();
+                audioSource.clip = audioClip;
+                audioSource.Play();
 
-            audioSource.clip = audioClip;
-            audioSource.Play();
-
-            data.character.StartCoroutine(WaitForAudio(data.character, audioSource));
+                data.character.StartCoroutine(WaitForAudio(data.character, audioSource));
+            }
         }
 
         IEnumerator WaitForAudio(DialogueCharacter character, AudioSource audioSource)
