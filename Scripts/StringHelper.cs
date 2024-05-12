@@ -109,5 +109,14 @@ namespace DracarysInteractive.AIStudio
         {
             return Regex.Replace(completion, regex, String.Empty);
         }
+
+        public static string PostProcessJSON(string JSON)
+        {
+            JSON = JSON.Replace("\\n", "\\\\n");
+            JSON = JSON.Replace("\\\"", "\\\\\"");
+            JSON = JSON.Replace("'", "\\'");
+            JSON = JSON.Replace("\\\\\\n", "\\\\n");
+            return JSON;
+        }
     }
 }
