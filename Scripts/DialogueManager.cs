@@ -15,6 +15,8 @@ namespace DracarysInteractive.AIStudio
         public bool dialogueClosed = false;
         public string[] tags;
         public UnityEvent startingDialogue;
+        public string nameDelimiter = ":";
+        public bool chatInitiatedByNPC = false;
 
         private DialogueCharacter _player;
         private Dictionary<string, DialogueCharacter> _NPCs = new Dictionary<string, DialogueCharacter>();
@@ -133,7 +135,10 @@ namespace DracarysInteractive.AIStudio
 
             if (dialogue.initialPrompt != null && dialogue.initialPrompt.Trim().Length > 0)
             {
-                DialogueActionManager.Instance.EnqueueAction(new InjectChat(dialogue.initialPrompt, true));
+                if (chatInitiatedByNPC) 
+                    DialogueActionManager.Instance.EnqueueAction(new InjectInitialChat(dialogue.initialPrompt));
+                else
+                    DialogueActionManager.Instance.EnqueueAction(new InjectChat(dialogue.initialPrompt, true));
             }
 
             if (dialogue.closingPrompt != null && dialogue.closingPrompt.Trim().Length > 0)

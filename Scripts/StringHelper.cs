@@ -115,6 +115,7 @@ namespace DracarysInteractive.AIStudio
             JSON = JSON.Replace("\\n", "\\\\n");
             JSON = JSON.Replace("\\\"", "\\\\\"");
             JSON = JSON.Replace("'", "\\'");
+            JSON = JSON.Replace("`", "\\`");
             JSON = JSON.Replace("\\\\\\n", "\\\\n");
             return JSON;
         }

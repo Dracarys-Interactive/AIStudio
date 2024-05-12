@@ -85,7 +85,7 @@ namespace DracarysInteractive.AIStudio
 
                 Log($"CompleteChat.OnChatCompletion subcompletion=\"{subcompletion}\"");
 
-                int i = subcompletion.IndexOf("::");
+                int i = subcompletion.IndexOf(DialogueManager.Instance.nameDelimiter);
 
                 if (i != -1)
                 {
