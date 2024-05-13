@@ -112,12 +112,10 @@ namespace DracarysInteractive.AIStudio
 
         public static string PostProcessJSON(string JSON)
         {
-            JSON = JSON.Replace("\\n", "\\\\n");
-            JSON = JSON.Replace("\\\"", "\\\\\"");
-            JSON = JSON.Replace("'", "\\'");
-            JSON = JSON.Replace("`", "\\`");
-            JSON = JSON.Replace("\\\\\\n", "\\\\n");
-            return JSON;
+            string s = JSON.Replace("\\", "\\\\");
+            s = s.Replace("'", "\\'");
+            s = s.Replace("`", "\\`");
+            return s;
         }
     }
 }
