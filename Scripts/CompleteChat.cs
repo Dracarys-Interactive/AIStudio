@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -62,6 +63,7 @@ namespace DracarysInteractive.AIStudio
 
             Log($"OnChatCompletion: completion={completion}");
 
+            /*
             foreach (string tag in DialogueManager.Instance.tags)
             {
                 string[] taggedStrings = StringHelper.ExtractTaggedStrings(completion, tag);
@@ -72,8 +74,9 @@ namespace DracarysInteractive.AIStudio
                     Log($"OnChatCompletion: completion after tag {tag} processing={completion}");
                 }
             }
+            */
 
-            string[] subcompletions = StringHelper.SplitCompletion(completion);
+            string[] subcompletions = StringHelper.SplitCompletion(completion, DialogueManager.Instance.nameDelimiter);
             string name = null;
 
             for (int j = 0; j < subcompletions.Length; j++)
@@ -100,8 +103,36 @@ namespace DracarysInteractive.AIStudio
                     continue;
                 }
 
+                List<ProcessTags> processTags = new List<ProcessTags>();
+
+                foreach (string tag in DialogueManager.Instance.tags)
+                {
+                    string[] taggedStrings = StringHelper.ExtractTaggedStrings(subcompletion, tag);
+                    if (taggedStrings.Length > 0)
+                    {
+                        processTags.Add(new ProcessTags(npc, tag, taggedStrings));
+                        subcompletion = StringHelper.RemoveTaggedStrings(subcompletion, tag);
+                        Log($"OnChatCompletion: subcompletion after tag {tag} processing={subcompletion}");
+                    }
+                }
+
+                Log($"OnChatCompletion: subcompletion after tag processing: {subcompletion}");
+
+                subcompletion = StringHelper.filterSubcompletion(subcompletion);
+
+                Log($"OnChatCompletion: subcompletion after filtering: {subcompletion}");
+
                 string[] actions = StringHelper.ExtractStringsInParentheses(subcompletion);
-                DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions));
+
+                Log($"OnChatCompletion: Speak: {subcompletion}");
+
+                DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions, () =>
+                {
+                    foreach (ProcessTags action in processTags)
+                    {
+                        DialogueActionManager.Instance.EnqueueAction(action);
+                    }
+                }));
             }
 
             if (!DialogueManager.Instance.HasPlayer)

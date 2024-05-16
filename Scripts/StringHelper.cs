@@ -100,7 +100,7 @@ namespace DracarysInteractive.AIStudio
             return subcompletions.ToArray();
         }
 
-        private static string filterSubcompletion(string subcompletion)
+        public static string filterSubcompletion(string subcompletion)
         {
             return subcompletion.Replace("\\n", " ").Replace("\\", "");
         }
@@ -116,6 +116,36 @@ namespace DracarysInteractive.AIStudio
             s = s.Replace("'", "\\'");
             s = s.Replace("`", "\\`");
             return s;
+        }
+
+        public static string[] SplitCompletion(string completion, string delimiter)
+        {
+            if (string.IsNullOrEmpty(completion) || string.IsNullOrEmpty(delimiter))
+            {
+                return new string[0];
+            }
+
+            // Regex pattern to match segments starting with alphabetic characters and the delimiter
+            string pattern = $@"(?<part>[A-Za-z]+{Regex.Escape(delimiter)}.*?)(?=(?:[A-Za-z]+{Regex.Escape(delimiter)})|$)";
+
+            var matches = Regex.Matches(completion, pattern, RegexOptions.Singleline);
+            var results = new List<string>();
+
+            foreach (Match match in matches)
+            {
+                if (match.Success)
+                {
+                    results.Add(match.Groups["part"].Value);
+                }
+            }
+
+            // If no matches were found, return the original string as the only element in the array
+            if (results.Count == 0)
+            {
+                return new string[] { completion };
+            }
+
+            return results.ToArray();
         }
     }
 }
