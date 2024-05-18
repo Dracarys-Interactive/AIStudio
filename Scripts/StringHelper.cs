@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DracarysInteractive.AIStudio
@@ -110,12 +111,25 @@ namespace DracarysInteractive.AIStudio
             return Regex.Replace(completion, regex, String.Empty);
         }
 
-        public static string PostProcessJSON(string JSON)
+        public static string PostProcessJSONForDB(string JSON)
         {
             string s = JSON.Replace("\\", "\\\\");
             s = s.Replace("'", "\\'");
             s = s.Replace("`", "\\`");
             return s;
+        }
+
+        public static string PostProcessJSONForJShell(string JSON)
+        {
+            // Use regular expression to match backslashes before a double quote
+            string pattern = @"\\(?="")";
+
+            // Replace matched pattern with an empty string
+            string result = Regex.Replace(JSON, pattern, "");
+
+            result = result.Replace("\\\\t", "\\t");
+
+            return result;
         }
 
         public static string[] SplitCompletion(string completion, string delimiter)
@@ -146,6 +160,21 @@ namespace DracarysInteractive.AIStudio
             }
 
             return results.ToArray();
+        }
+
+        public static string[] SplitLines(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return new string[0];
+            }
+
+            string[] lines = text.Split(new[] { "\\n" }, StringSplitOptions.None);
+
+            // Use LINQ to filter out empty entries
+            string[] nonEmptyLines = lines.Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
+
+            return nonEmptyLines;
         }
     }
 }
