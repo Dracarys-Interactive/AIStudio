@@ -121,13 +121,11 @@ namespace DracarysInteractive.AIStudio
 
         public static string PostProcessJSONForJShell(string JSON)
         {
-            // Use regular expression to match backslashes before a double quote
-            string pattern = @"\\(?="")";
+            string result = Regex.Replace(JSON, @"\\+(?=\x22)", string.Empty);
 
-            // Replace matched pattern with an empty string
-            string result = Regex.Replace(JSON, pattern, "");
-
+            result = result.Replace("\\\\\\t", "\\t");
             result = result.Replace("\\\\t", "\\t");
+            result = result.TrimEnd('\\');
 
             return result;
         }
