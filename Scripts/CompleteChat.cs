@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -103,14 +104,13 @@ namespace DracarysInteractive.AIStudio
                     continue;
                 }
 
-                List<ProcessTags> processTags = new List<ProcessTags>();
-
                 foreach (string tag in DialogueManager.Instance.tags)
                 {
                     string[] taggedStrings = StringHelper.ExtractTaggedStrings(subcompletion, tag);
+
                     if (taggedStrings.Length > 0)
                     {
-                        processTags.Add(new ProcessTags(npc, tag, taggedStrings));
+                        DialogueActionManager.Instance.EnqueueAction(new ProcessTags(npc, tag, taggedStrings));
                         subcompletion = StringHelper.RemoveTaggedStrings(subcompletion, tag);
                         Log($"OnChatCompletion: subcompletion after tag {tag} processing={subcompletion}");
                     }
@@ -126,13 +126,7 @@ namespace DracarysInteractive.AIStudio
 
                 Log($"OnChatCompletion: Speak: {subcompletion}");
 
-                DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions, () =>
-                {
-                    foreach (ProcessTags action in processTags)
-                    {
-                        DialogueActionManager.Instance.EnqueueAction(action);
-                    }
-                }));
+                DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions));
             }
 
             if (!DialogueManager.Instance.HasPlayer)

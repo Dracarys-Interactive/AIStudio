@@ -112,5 +112,13 @@ namespace DracarysInteractive.AIStudio
                 _console.text = msg;
             }
         }
+
+        public void SetConsole(TextMeshProUGUI console)
+        {
+            if (console)
+                _console = console;
+            else
+                Log("SetConsole passed null!", LogLevel.warning);
+        }
     }
 }
