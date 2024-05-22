@@ -13,6 +13,7 @@ namespace DracarysInteractive.AIStudio
 
         public CompleteChat()
         {
+            data = (null, true, null, true);
         }
 
         public CompleteChat(string text, bool prompt = false, Action onCompletion = null, Action<string> onResponse = null, bool speak = true) : base(onCompletion)
