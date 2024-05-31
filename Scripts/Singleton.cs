@@ -120,5 +120,13 @@ namespace DracarysInteractive.AIStudio
             else
                 Log("SetConsole passed null!", LogLevel.warning);
         }
+
+        public void WriteConsole(string msg)
+        {
+            if (_console)
+            {
+                _console.text = msg;
+            }
+        }
     }
 }
