@@ -24,6 +24,12 @@ namespace DracarysInteractive.AIStudio
                 DialogueCharacter.onEndSpeaking.AddListener(OnEndSpeaking);
         }
 
+        public void RecognizeAfterEndSpeaking()
+        {
+            recognizeAfterEndSpeaking = true;
+            DialogueCharacter.onEndSpeaking.AddListener(OnEndSpeaking);
+        }
+
         private void OnEndSpeaking(DialogueCharacter arg0)
         {
             recognize = true;
