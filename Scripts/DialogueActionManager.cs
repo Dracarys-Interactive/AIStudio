@@ -45,16 +45,11 @@ namespace DracarysInteractive.AIStudio
             }
         }
 
-        public bool paused
-        {
-            get => Time.timeScale == 0;
-        }
-
-        void Update()
+        void FixedUpdate()
         {
             currentTime = Time.time;
 
-            if (!actionRunning && ActionsPending && !paused)
+            if (!actionRunning && ActionsPending)
             {
                 actionRunning = true;
                 DialogueActionBase action = _runningAction = Dequeue();

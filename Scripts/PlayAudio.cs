@@ -39,7 +39,7 @@ namespace DracarysInteractive.AIStudio
 
         IEnumerator WaitForAudio(DialogueCharacter character, AudioSource audioSource)
         {
-            yield return new WaitWhile(() => audioSource.isPlaying);
+            yield return new WaitWhile(() => audioSource.isPlaying || AudioListener.pause);
 
             if (onCompletion != null)
                 onCompletion.Invoke();
