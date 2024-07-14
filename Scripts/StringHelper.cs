@@ -167,7 +167,7 @@ namespace DracarysInteractive.AIStudio
                 return new string[0];
             }
 
-            string[] lines = text.Split(new[] { "\\n" }, StringSplitOptions.None);
+            string[] lines = text.Split(new[] { "\\n", "\\r" }, StringSplitOptions.None);
 
             // Use LINQ to filter out empty entries
             string[] nonEmptyLines = lines.Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
