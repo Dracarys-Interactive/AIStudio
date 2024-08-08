@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402185, g: 0.49316472, b: 0.57223153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -353,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Auth: {fileID: 11400000, guid: 6cbeefa324aa08e45a89d33252973b94, type: 2}
   Args: {fileID: 11400000, guid: e2789dfa8bae657499c9a571b514afc1, type: 2}
-  Model: 11
+  Model: 13
   Usage:
     prompt_tokens: 0
     completion_tokens: 0
@@ -385,6 +384,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 0
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
 --- !u!1 &530888550
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +695,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   recognizeContinuously: 0
+  recognizeAfterEndSpeaking: 0
   warningText: {fileID: 1598740590}
   recognize: 0
 --- !u!1 &838759093
@@ -823,11 +827,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   activeDialogue: {fileID: 11400000, guid: 13ae26fe4ede526419566e4263a031e9, type: 2}
-  ClosingPromptInjected:
+  closingPromptInjected:
     m_PersistentCalls:
       m_Calls: []
   dialogueClosed: 0
+  tags: []
+  startingDialogue:
+    m_PersistentCalls:
+      m_Calls: []
+  nameDelimiter: ':'
+  chatInitiatedByNPC: 0
 --- !u!1 &1177257072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1213,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1774,6 +1787,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   _runningAction:
     rid: -2
   _queue: []

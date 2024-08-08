@@ -61,7 +61,7 @@ namespace DracarysInteractive.AIStudio
         {
             onSpeechRecognized.Invoke(this);
 
-            text = character.character + ":: " + text;
+            text = character.character + DialogueManager.Instance.nameDelimiter + text;
 
             if (transcript)
                 transcript.text = text;
