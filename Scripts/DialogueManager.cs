@@ -11,8 +11,12 @@ namespace DracarysInteractive.AIStudio
     public class DialogueManager : Singleton<DialogueManager>
     {
         public DialogueSO activeDialogue;
-        public UnityEvent ClosingPromptInjected;
+        public UnityEvent closingPromptInjected;
         public bool dialogueClosed = false;
+        public string[] tags;
+        public UnityEvent startingDialogue;
+        public string nameDelimiter = ":";
+        public bool chatInitiatedByNPC = false;
 
         private DialogueCharacter _player;
         private Dictionary<string, DialogueCharacter> _NPCs = new Dictionary<string, DialogueCharacter>();
@@ -31,11 +35,13 @@ namespace DracarysInteractive.AIStudio
         private void onSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             dialogueClosed = false;
-            DialogueModel.Instance.Clear(); // flag in DialogeSO?
-            DialogueActionManager.Instance.Clear();
 
             if (activeDialogue)
+            {
+                DialogueModel.Instance.Clear(); // flag in DialogueSO?
+                DialogueActionManager.Instance.Clear();
                 StartDialogue(activeDialogue);
+            }
         }
 
         private void OnClosingPromptInjected()
@@ -46,7 +52,7 @@ namespace DracarysInteractive.AIStudio
         private void OnClosingPrompt()
         {
             dialogueClosed = true;
-            ClosingPromptInjected.Invoke();
+            closingPromptInjected.Invoke();
         }
 
         public void StartDialogue(Dropdown dropdown)
@@ -58,6 +64,8 @@ namespace DracarysInteractive.AIStudio
 
         public void StartDialogue(DialogueSO dialogue)
         {
+            startingDialogue.Invoke();
+
             DialogueActionManager.Instance.Clear();
 
             activeDialogue = dialogue;
@@ -127,7 +135,10 @@ namespace DracarysInteractive.AIStudio
 
             if (dialogue.initialPrompt != null && dialogue.initialPrompt.Trim().Length > 0)
             {
-                DialogueActionManager.Instance.EnqueueAction(new InjectChat(dialogue.initialPrompt, true));
+                if (chatInitiatedByNPC) 
+                    DialogueActionManager.Instance.EnqueueAction(new InjectInitialChat(dialogue.initialPrompt));
+                else
+                    DialogueActionManager.Instance.EnqueueAction(new InjectChat(dialogue.initialPrompt, true));
             }
 
             if (dialogue.closingPrompt != null && dialogue.closingPrompt.Trim().Length > 0)

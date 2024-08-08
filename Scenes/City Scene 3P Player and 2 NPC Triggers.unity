@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 0.25
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.35374078, g: 0.26669723, b: 0.1699728, a: 0.25}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -167,12 +166,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b2429215e880d47a7f02a6242361b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   activeDialogue: {fileID: 0}
-  ClosingPromptInjected:
+  closingPromptInjected:
     m_PersistentCalls:
       m_Calls: []
   dialogueClosed: 0
+  tags: []
+  startingDialogue:
+    m_PersistentCalls:
+      m_Calls: []
+  nameDelimiter: ':'
+  chatInitiatedByNPC: 0
 --- !u!1 &150783893
 GameObject:
   m_ObjectHideFlags: 3
@@ -197,7 +205,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150783893}
-  m_LocalRotation: {x: 0.25796455, y: 0.51225734, z: -0.16467562, w: 0.8024517}
+  m_LocalRotation: {x: 0.25796452, y: 0.51225734, z: -0.16467562, w: 0.80245167}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -313,9 +321,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8980d81775e5f84da432ff247d8bf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   recognizeContinuously: 0
+  recognizeAfterEndSpeaking: 0
   warningText: {fileID: 6091453433440907958}
+  recognize: 0
 --- !u!1 &615159668
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +451,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661375258}
-  m_LocalRotation: {x: 0.27247974, y: 0.5091857, z: -0.17394167, w: 0.7976397}
+  m_LocalRotation: {x: 0.2724798, y: 0.50918597, z: -0.17394188, w: 0.7976394}
   m_LocalPosition: {x: -279.72125, y: 74.02901, z: 16.213154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -646,7 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Auth: {fileID: 11400000, guid: 6cbeefa324aa08e45a89d33252973b94, type: 2}
   Args: {fileID: 11400000, guid: e2789dfa8bae657499c9a571b514afc1, type: 2}
-  Model: 7
+  Model: 13
   Usage:
     prompt_tokens: 0
     completion_tokens: 0
@@ -676,7 +689,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35de2bf7d9ffcb342826a22aea56fc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 0
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
 --- !u!1 &975063275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,7 +1148,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362910974}
-  m_LocalRotation: {x: 0.2869433, y: 0.50593734, z: -0.1831746, w: 0.7925515}
+  m_LocalRotation: {x: 0.28694335, y: 0.5059374, z: -0.18317467, w: 0.7925515}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1260,7 +1276,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526268425}
-  m_LocalRotation: {x: 0.27247974, y: 0.5091856, z: -0.17394161, w: 0.7976398}
+  m_LocalRotation: {x: 0.27247977, y: 0.50918597, z: -0.17394185, w: 0.7976394}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1541,11 +1557,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecb829c2e4657f498c656c0facab3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
+  _runningAction:
+    rid: -2
   _queue: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1725904437
 GameObject:
   m_ObjectHideFlags: 3
@@ -2681,6 +2704,7 @@ MonoBehaviour:
   emoteDuration: 4
   talkingAnimations: 3
   probabilityOfTalkingAnimation: 0.75
+  lookAtTransform: {fileID: 0}
 --- !u!95 &482996837588709044
 Animator:
   serializedVersion: 5
@@ -18426,6 +18450,7 @@ MonoBehaviour:
   emoteDuration: 4
   talkingAnimations: 3
   probabilityOfTalkingAnimation: 0.5
+  lookAtTransform: {fileID: 0}
 --- !u!1 &1469800051628880712
 GameObject:
   m_ObjectHideFlags: 0
@@ -19829,7 +19854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -19843,9 +19868,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1469800052176117321}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputMove
+      - m_Target: {fileID: 1469800052176117323}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19859,9 +19884,9 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1469800052176117321}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputLook
+      - m_Target: {fileID: 1469800052176117323}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19875,9 +19900,9 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta,/XInputControllerWindows/rightStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1469800052176117321}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputJump
+      - m_Target: {fileID: 1469800052176117323}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19891,9 +19916,9 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1469800052176117321}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputSprint
+      - m_Target: {fileID: 1469800052176117323}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnSprint
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19906,9 +19931,21 @@ MonoBehaviour:
     m_ActionId: 980e881e-182c-404c-8cbf-3d09fdb48fef
     m_ActionName: Player/Sprint[/Keyboard/leftShift,/XInputControllerWindows/leftTrigger]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e4ce1614-c754-48c1-9103-33130441661f
-    m_ActionName: UI/New action
+      m_Calls:
+      - m_Target: {fileID: 584761435}
+        m_TargetAssemblyTypeName: DracarysInteractive.AIStudio.SpeechServices, Assembly-CSharp
+        m_MethodName: OnSpeak
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 85d86663-51f8-4c06-9456-af3d2e295948
+    m_ActionName: Player/Speak[/Keyboard/backspace]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -27097,6 +27134,7 @@ MonoBehaviour:
   emoteDuration: 4
   talkingAnimations: 3
   probabilityOfTalkingAnimation: 0.5
+  lookAtTransform: {fileID: 0}
 --- !u!82 &5207355202595699000
 AudioSource:
   m_ObjectHideFlags: 0

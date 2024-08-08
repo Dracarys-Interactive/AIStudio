@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Android;
 
 namespace DracarysInteractive.AIStudio
 {
@@ -25,6 +26,13 @@ namespace DracarysInteractive.AIStudio
         private string defaultVoice = "en-US-JennyNeural";
         private Action _onStartSpeechRecognition;
         private Action<string> _onSpeechRecognized;
+        private Action _onSpeechNotRecognized;
+
+#if PLATFORM_ANDROID
+        // Required to manifest microphone permission, cf.
+        // https://docs.unity3d.com/Manual/android-manifest.html
+        private Microphone mic;
+#endif
 
         public bool RecognitionStarted
         {
@@ -61,6 +69,15 @@ namespace DracarysInteractive.AIStudio
 
             recognizer = new SpeechRecognizer(config);
 
+#if PLATFORM_ANDROID
+            // Request to use the microphone, cf.
+            // https://docs.unity3d.com/Manual/android-RequestingPermissions.html
+            if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            {
+                Permission.RequestUserPermission(Permission.Microphone);
+            }
+#endif
+
             recognizer.Canceled += (s, e) =>
             {
                 var cancellation = CancellationDetails.FromResult(e.Result);
@@ -94,6 +111,7 @@ namespace DracarysInteractive.AIStudio
                 else if (e.Result.Reason == ResultReason.NoMatch)
                 {
                     SpeechServices.Instance.Log($"NOMATCH: Speech could not be recognized.");
+                    _onSpeechNotRecognized();
                 }
             };
 
@@ -149,10 +167,11 @@ namespace DracarysInteractive.AIStudio
             onSynthesisCompleted();
         }
 
-        public async void Recognize(Action onStartSpeechRecognition, Action<string> onSpeechRecognized)
+        public async void Recognize(Action onStartSpeechRecognition, Action<string> onSpeechRecognized, Action onSpeechNotRecognized)
         {
             _onStartSpeechRecognition = onStartSpeechRecognition;
             _onSpeechRecognized = onSpeechRecognized;
+            _onSpeechNotRecognized = onSpeechNotRecognized;
 
             var result = await recognizer.RecognizeOnceAsync();
 

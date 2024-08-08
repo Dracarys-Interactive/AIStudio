@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 0.25
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16787642, g: 0.16338524, b: 0.17167333, a: 0.25}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -167,12 +166,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b2429215e880d47a7f02a6242361b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   activeDialogue: {fileID: 0}
-  ClosingPromptInjected:
+  closingPromptInjected:
     m_PersistentCalls:
       m_Calls: []
   dialogueClosed: 0
+  tags: []
+  startingDialogue:
+    m_PersistentCalls:
+      m_Calls: []
+  nameDelimiter: ':'
+  chatInitiatedByNPC: 0
 --- !u!1 &196698633
 GameObject:
   m_ObjectHideFlags: 3
@@ -369,7 +377,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384062371}
-  m_LocalRotation: {x: 0.2512102, y: -0.63456815, z: 0.22974569, w: 0.6938542}
+  m_LocalRotation: {x: 0.2512103, y: -0.6345682, z: 0.22974585, w: 0.69385403}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -867,7 +875,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149934257}
-  m_LocalRotation: {x: 0.2258402, y: -0.64249486, z: 0.2065434, w: 0.7025215}
+  m_LocalRotation: {x: 0.2258402, y: -0.642495, z: 0.20654349, w: 0.7025213}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1063,7 +1071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Auth: {fileID: 11400000, guid: 6cbeefa324aa08e45a89d33252973b94, type: 2}
   Args: {fileID: 11400000, guid: e2789dfa8bae657499c9a571b514afc1, type: 2}
-  Model: 7
+  Model: 13
   Usage:
     prompt_tokens: 0
     completion_tokens: 0
@@ -1093,7 +1101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35de2bf7d9ffcb342826a22aea56fc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 0
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
 --- !u!1 &1232115126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,9 +1204,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8980d81775e5f84da432ff247d8bf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   recognizeContinuously: 0
+  recognizeAfterEndSpeaking: 0
   warningText: {fileID: 1480486076}
+  recognize: 0
 --- !u!1 &1338786369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,11 +1524,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecb829c2e4657f498c656c0facab3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
+  _runningAction:
+    rid: -2
   _queue: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1001 &1870789634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1823,7 +1846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1837,9 +1860,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4660875729117011466}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputMove
+      - m_Target: {fileID: 4660875729117011464}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1853,9 +1876,9 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4660875729117011466}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputLook
+      - m_Target: {fileID: 4660875729117011464}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1869,9 +1892,9 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta,/XInputControllerWindows/rightStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4660875729117011466}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputJump
+      - m_Target: {fileID: 4660875729117011464}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1885,9 +1908,9 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4660875729117011466}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: InputSprint
+      - m_Target: {fileID: 4660875729117011464}
+        m_TargetAssemblyTypeName: StarterAssets.StarterAssetsInputs, Assembly-CSharp
+        m_MethodName: OnSprint
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1900,9 +1923,21 @@ MonoBehaviour:
     m_ActionId: 980e881e-182c-404c-8cbf-3d09fdb48fef
     m_ActionName: Player/Sprint[/Keyboard/leftShift,/XInputControllerWindows/leftTrigger]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e4ce1614-c754-48c1-9103-33130441661f
-    m_ActionName: UI/New action
+      m_Calls:
+      - m_Target: {fileID: 1315727853}
+        m_TargetAssemblyTypeName: DracarysInteractive.AIStudio.SpeechServices, Assembly-CSharp
+        m_MethodName: OnSpeak
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 85d86663-51f8-4c06-9456-af3d2e295948
+    m_ActionName: Player/Speak[/Keyboard/backspace]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2472,7 +2507,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4660875729431633582}
-  m_LocalRotation: {x: 0.027272973, y: -0.1225909, z: 0.0009425195, w: 0.9920821}
+  m_LocalRotation: {x: 0.027272932, y: -0.1225909, z: 0.00094251824, w: 0.9920821}
   m_LocalPosition: {x: -0.10225469, y: 0.000000007720018, z: 0}
   m_LocalScale: {x: 1.0078583, y: 1.0078585, z: 1.007859}
   m_ConstrainProportionsScale: 0
@@ -9735,6 +9770,7 @@ MonoBehaviour:
   emoteDuration: 4
   talkingAnimations: 3
   probabilityOfTalkingAnimation: 0.5
+  lookAtTransform: {fileID: 0}
 --- !u!4 &4660875730200380850
 Transform:
   m_ObjectHideFlags: 0
@@ -21852,6 +21888,7 @@ MonoBehaviour:
   emoteDuration: 4
   talkingAnimations: 3
   probabilityOfTalkingAnimation: 0.5
+  lookAtTransform: {fileID: 0}
 --- !u!4 &5771547182499882332
 Transform:
   m_ObjectHideFlags: 0
@@ -26380,6 +26417,7 @@ MonoBehaviour:
   emoteDuration: 4
   talkingAnimations: 3
   probabilityOfTalkingAnimation: 0.5
+  lookAtTransform: {fileID: 0}
 --- !u!195 &6183334849941026409
 NavMeshAgent:
   m_ObjectHideFlags: 0

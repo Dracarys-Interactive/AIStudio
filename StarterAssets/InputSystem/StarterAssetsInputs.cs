@@ -1,6 +1,7 @@
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 #endif
 
 namespace StarterAssets
@@ -26,6 +27,11 @@ namespace StarterAssets
 			MoveInput(value.Get<Vector2>());
 		}
 
+		public void OnMove(CallbackContext ctx)
+		{
+			MoveInput(ctx.ReadValue<Vector2>());
+		}
+
 		public void OnLook(InputValue value)
 		{
 			if(cursorInputForLook)
@@ -34,14 +40,32 @@ namespace StarterAssets
 			}
 		}
 
+		public void OnLook(CallbackContext ctx)
+		{
+			if (cursorInputForLook)
+			{
+				LookInput(ctx.ReadValue<Vector2>());
+			}
+		}
+
 		public void OnJump(InputValue value)
 		{
 			JumpInput(value.isPressed);
 		}
 
+		public void OnJump(CallbackContext ctx)
+		{
+			JumpInput(ctx.ReadValueAsButton());
+		}
+
 		public void OnSprint(InputValue value)
 		{
 			SprintInput(value.isPressed);
+		}
+
+		public void OnSprint(CallbackContext ctx)
+        {
+			SprintInput(ctx.ReadValueAsButton());
 		}
 #endif
 

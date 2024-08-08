@@ -5,13 +5,15 @@ namespace DracarysInteractive.AIStudio
 {
     public class CloseDialogue : DialogueAction<(string nextScene, int delay)>
     {
-        public CloseDialogue(string nextScene, int delay, Action onCompletion = null) : base(onCompletion)
+        public CloseDialogue(string nextScene = null, int delay = 0, Action onCompletion = null) : base(onCompletion)
         {
             data = (nextScene, delay);
         }
 
         public override void Invoke()
         {
+            DialogueManager.Instance.dialogueClosed = true;
+
             if (onCompletion != null)
                 onCompletion.Invoke();
 

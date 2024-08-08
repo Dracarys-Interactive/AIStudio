@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace DracarysInteractive.AIStudio
@@ -22,6 +23,9 @@ namespace DracarysInteractive.AIStudio
 
         private static bool AppQuitting { get; set; } = false;
 
+        [SerializeField] private TextMeshProUGUI _console;
+        [SerializeField] private LogLevel _consoleLogLevel = LogLevel.error;
+
         /// <summary>
         /// Singleton instance
         /// </summary>
@@ -29,11 +33,13 @@ namespace DracarysInteractive.AIStudio
         {
             get
             {
+                /*
                 if (AppQuitting)
                 {
                     Debug.LogWarning($"No {nameof(Singleton<T>)} returned because application is quiting");
                     return null;
                 }
+                */
                 TryCreateSingleton(_instance, ref _instance);
                 return _instance;
             }
@@ -99,6 +105,27 @@ namespace DracarysInteractive.AIStudio
                     Debug.LogWarning(msg);
                 else
                     Debug.LogError(msg);
+            }
+
+            if (_console && level >= _consoleLogLevel)
+            {
+                _console.text = msg;
+            }
+        }
+
+        public void SetConsole(TextMeshProUGUI console)
+        {
+            if (console)
+                _console = console;
+            else
+                Log("SetConsole passed null!", LogLevel.warning);
+        }
+
+        public void WriteConsole(string msg)
+        {
+            if (_console)
+            {
+                _console.text = msg;
             }
         }
     }

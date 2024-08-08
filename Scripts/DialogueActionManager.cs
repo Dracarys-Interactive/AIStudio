@@ -45,7 +45,7 @@ namespace DracarysInteractive.AIStudio
             }
         }
 
-        void Update()
+        void FixedUpdate()
         {
             currentTime = Time.time;
 
