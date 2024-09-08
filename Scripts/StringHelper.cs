@@ -174,5 +174,15 @@ namespace DracarysInteractive.AIStudio
 
             return nonEmptyLines;
         }
+
+        public static string Replace(string text, Dictionary<string, string> fromToMap)
+        {
+            foreach(string key in fromToMap.Keys)
+            {
+                text = text.Replace(key, fromToMap[key]);
+            }
+
+            return text;
+        }
     }
 }
