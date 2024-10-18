@@ -314,8 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 262173095}
   - component: {fileID: 262173098}
-  - component: {fileID: 262173097}
-  - component: {fileID: 262173096}
+  - component: {fileID: 262173099}
   m_Layer: 0
   m_Name: DialogueModel
   m_TagString: Untagged
@@ -338,38 +337,6 @@ Transform:
   m_Father: {fileID: 1691133917}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &262173096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262173094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 582650b353200ef458d8ce61588f26dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Auth: {fileID: 11400000, guid: 6cbeefa324aa08e45a89d33252973b94, type: 2}
-  Args: {fileID: 11400000, guid: e2789dfa8bae657499c9a571b514afc1, type: 2}
-  Model: 13
-  Usage:
-    prompt_tokens: 0
-    completion_tokens: 0
-    total_tokens: 0
-  dialogue: []
---- !u!114 &262173097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262173094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e18d4223818d89946b70321b370b5a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &262173098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +353,21 @@ MonoBehaviour:
   _destroyOnLoad: 0
   _console: {fileID: 0}
   _consoleLogLevel: 3
+--- !u!114 &262173099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262173094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c2328e2cf779140b4871a07f84e7cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: gpt-4o
+  async: 0
+  messages: []
 --- !u!1 &530888550
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +662,7 @@ MonoBehaviour:
   region: 
   sampleRate: 24000
   segmentationSilenceTimeout: 2
-  stream: 1
+  stream: 0
 --- !u!114 &704273185
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402185, g: 0.49316472, b: 0.57223153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,8 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 23099170}
   - component: {fileID: 23099173}
-  - component: {fileID: 23099172}
-  - component: {fileID: 23099171}
+  - component: {fileID: 23099174}
   m_Layer: 0
   m_Name: DialogueModel
   m_TagString: Untagged
@@ -157,38 +155,6 @@ Transform:
   m_Father: {fileID: 1691133917}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &23099171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 23099169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 582650b353200ef458d8ce61588f26dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Auth: {fileID: 11400000, guid: 6cbeefa324aa08e45a89d33252973b94, type: 2}
-  Args: {fileID: 11400000, guid: e2789dfa8bae657499c9a571b514afc1, type: 2}
-  Model: 7
-  Usage:
-    prompt_tokens: 0
-    completion_tokens: 0
-    total_tokens: 0
-  dialogue: []
---- !u!114 &23099172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 23099169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e18d4223818d89946b70321b370b5a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &23099173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +169,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 0
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
+--- !u!114 &23099174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23099169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c2328e2cf779140b4871a07f84e7cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: gpt-4o
+  async: 0
+  messages: []
 --- !u!1 &124804875
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,11 +232,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   activeDialogue: {fileID: 11400000, guid: eef9ee721341e7741a3d968309ac68dd, type: 2}
-  ClosingPromptInjected:
+  closingPromptInjected:
     m_PersistentCalls:
       m_Calls: []
   dialogueClosed: 0
+  tags: []
+  startingDialogue:
+    m_PersistentCalls:
+      m_Calls: []
+  nameDelimiter: ':'
+  chatInitiatedByNPC: 0
 --- !u!1 &233744049
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +291,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   _runningAction:
     rid: -2
   _queue: []
@@ -1083,6 +1076,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1254,7 +1248,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logLevel: 3
   _destroyOnLoad: 1
+  _console: {fileID: 0}
+  _consoleLogLevel: 3
   recognizeContinuously: 0
+  recognizeAfterEndSpeaking: 0
   warningText: {fileID: 521628357}
   recognize: 0
 --- !u!1 &1648101445
