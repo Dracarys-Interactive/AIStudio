@@ -12,6 +12,7 @@ namespace DracarysInteractive.AIStudio
     public class OpenAIDotNETDialogueModel : MonoBehaviour, IDialogueModel
     {
 #if USE_COM_OPENAI_API
+        public string apikey;
         public string model = "gpt-4o";
         public bool async = false;
         public string[] messages; // Inspector debugging...
@@ -24,7 +25,7 @@ namespace DracarysInteractive.AIStudio
         void Awake()
         {
             DialogueModel.Instance.Log($"creating OpenAI .NET chat client, using model {model}");
-            _client = new(model, Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+            _client = new(model, string.IsNullOrEmpty(apikey) ? Environment.GetEnvironmentVariable("OPENAI_API_KEY") : apikey);
         }
 
         private void Add(ChatMessage message)
@@ -71,7 +72,6 @@ namespace DracarysInteractive.AIStudio
             onResponse.Invoke(text);
         }
 
-
         public void Prompt(string prompt)
         {
             DialogueModel.Instance.Log("enter Prompt");
@@ -89,17 +89,6 @@ namespace DracarysInteractive.AIStudio
             DialogueModel.Instance.Log("enter Respond");
             Add(ChatMessage.CreateAssistantMessage(response));
         }
-
-        /*
-        private void add(string content, string role)
-        {
-            DialogueModel.Instance.Log("enter add");
-            MessageV1 message = new MessageV1();
-            message.content = content;
-            message.role = role;
-            OpenAiChatCompleterV1.Instance.dialogue.Add(message);
-        }
-        */
 #else
         public void Clear()
         {

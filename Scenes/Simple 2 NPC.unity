@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c2328e2cf779140b4871a07f84e7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apikey: 
   model: gpt-4o
   async: 0
   messages: []
