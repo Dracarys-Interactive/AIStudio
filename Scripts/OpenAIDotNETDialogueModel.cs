@@ -2,7 +2,12 @@
 using OpenAI.Chat;
 #endif
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -28,6 +33,33 @@ namespace DracarysInteractive.AIStudio
             _client = new(model, string.IsNullOrEmpty(apikey) ? Environment.GetEnvironmentVariable("OPENAI_API_KEY") : apikey);
         }
 
+        public void SetTemperature(float temperature)
+        {
+            _options.Temperature = temperature;
+        }
+
+        public void SetMaxTokens(int maxTokens)
+        {
+            _options.MaxOutputTokenCount = maxTokens;
+        }
+        public string GetMessageJSON()
+        {
+            using MemoryStream stream = new();
+            using Utf8JsonWriter writer = new(stream);
+
+            writer.WriteStartArray();
+
+            foreach (IJsonModel<ChatMessage> message in _messages)
+            {
+                message.Write(writer, ModelReaderWriterOptions.Json);
+            }
+
+            writer.WriteEndArray();
+            writer.Flush();
+
+            return BinaryData.FromBytes(stream.ToArray()).ToString();
+        }
+
         private void Add(ChatMessage message)
         {
             _messages.Add(message);
@@ -42,19 +74,20 @@ namespace DracarysInteractive.AIStudio
             messages = new string[0];
         }
 
-        public async void Complete(Action<string> onResponse, Action<UnityWebRequest> onError)
+        public void Complete(Action<string> onResponse, Action<UnityWebRequest> onError)
         {
             if (async)
-                await CompleteAsync(onResponse, onError);
+                CompleteAsync(onResponse, onError);
             else
                 CompleteSync(onResponse, onError);
         }
 
-        private async Task CompleteAsync(Action<string> onResponse, Action<UnityWebRequest> onError)
+        private async void CompleteAsync(Action<string> onResponse, Action<UnityWebRequest> onError)
         {
             DialogueModel.Instance.Log("enter CompleteAsync");
 
             ChatCompletion completion = await _client.CompleteChatAsync(_messages, _options);
+
             string text = completion.Content[0].Text;
 
             Add(text);

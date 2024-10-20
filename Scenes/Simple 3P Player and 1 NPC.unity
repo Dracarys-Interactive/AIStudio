@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35de2bf7d9ffcb342826a22aea56fc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 0
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c2328e2cf779140b4871a07f84e7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apikey: 
   model: gpt-4o
   async: 0
   messages: []
@@ -230,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b2429215e880d47a7f02a6242361b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 1
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecb829c2e4657f498c656c0facab3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 1
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -1246,7 +1247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8980d81775e5f84da432ff247d8bf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 1
   _console: {fileID: 0}
   _consoleLogLevel: 3

@@ -239,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   apikey: 
   model: gpt-4o
-  async: 0
+  async: 1
   messages: []
 --- !u!114 &184600026
 MonoBehaviour:
