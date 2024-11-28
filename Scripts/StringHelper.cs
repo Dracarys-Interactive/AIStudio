@@ -15,7 +15,7 @@ namespace DracarysInteractive.AIStudio
             string pattern = $@"<{tag}[^>]*>(.*?)<\/{tag}>";
 
             // Match the pattern in the input string
-            MatchCollection matches = Regex.Matches(input, pattern);
+            MatchCollection matches = Regex.Matches(input, pattern, RegexOptions.Singleline);
 
             // Iterate through the matches and extract the text inside the XML elements
             foreach (Match match in matches)
@@ -34,7 +34,7 @@ namespace DracarysInteractive.AIStudio
             string pattern = $@"<{tag}[^>]*>(.*?)<\/{tag}>";
 
             // Remove all occurrences of the pattern from the input string
-            string result = Regex.Replace(input, pattern, "");
+            string result = Regex.Replace(input, pattern, "", RegexOptions.Singleline);
 
             return result;
         }
@@ -45,7 +45,7 @@ namespace DracarysInteractive.AIStudio
             string pattern = @"\((.*?)\)";
 
             // Create a regular expression object
-            Regex regex = new Regex(pattern);
+            Regex regex = new Regex(pattern, RegexOptions.Singleline);
 
             // Find all matches in the input string
             MatchCollection matches = regex.Matches(input);
@@ -70,7 +70,7 @@ namespace DracarysInteractive.AIStudio
             string pattern = @"\((.*?)\)";
 
             // Create a regular expression object
-            Regex regex = new Regex(pattern);
+            Regex regex = new Regex(pattern, RegexOptions.Singleline);
 
             // Replace all matches with an empty string
             string result = regex.Replace(input, "");
@@ -108,7 +108,7 @@ namespace DracarysInteractive.AIStudio
 
         public static string Remove(string completion, string regex)
         {
-            return Regex.Replace(completion, regex, String.Empty);
+            return Regex.Replace(completion, regex, String.Empty, RegexOptions.Singleline);
         }
 
         public static string PostProcessJSONForDB(string JSON)
@@ -121,7 +121,7 @@ namespace DracarysInteractive.AIStudio
 
         public static string PostProcessJSONForJShell(string JSON)
         {
-            string result = Regex.Replace(JSON, @"\\+(?=\x22)", string.Empty);
+            string result = Regex.Replace(JSON, @"\\+(?=\x22)", string.Empty, RegexOptions.Singleline);
 
             result = result.Replace("\\\\\\t", "\\t");
             result = result.Replace("\\\\t", "\\t");

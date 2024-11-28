@@ -90,6 +90,8 @@ namespace DracarysInteractive.AIStudio
 
             string text = completion.Content[0].Text;
 
+            DialogueModel.Instance.Log($"CompleteAsync: Add text={text}");
+
             Add(text);
             onResponse.Invoke(text);
         }
@@ -100,6 +102,8 @@ namespace DracarysInteractive.AIStudio
 
             ChatCompletion completion = _client.CompleteChat(_messages, _options);
             string text = completion.Content[0].Text;
+
+            DialogueModel.Instance.Log($"CompleteAsync: Add text={text}");
 
             Add(text);
             onResponse.Invoke(text);
