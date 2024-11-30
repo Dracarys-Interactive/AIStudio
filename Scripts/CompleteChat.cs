@@ -16,6 +16,7 @@ namespace DracarysInteractive.AIStudio
 
         public CompleteChat(string text, bool prompt = false, Action onCompletion = null, Action<string> onResponse = null, bool speak = true) : base(onCompletion)
         {
+            Log($"CompleteChat: text=\"{text}\"");
             data = (text, prompt, onResponse, speak);
         }
 
@@ -86,12 +87,6 @@ namespace DracarysInteractive.AIStudio
 
                     DialogueCharacter npc = DialogueManager.Instance.GetNPC(name);
 
-                    if (npc == null)
-                    {
-                        Log($"CompleteChat.OnChatCompletion model responded as player {name}", Singleton<DialogueActionManager>.LogLevel.warning);
-                        continue;
-                    }
-
                     foreach (string tag in DialogueManager.Instance.tags)
                     {
                         string[] taggedStrings = StringHelper.ExtractTaggedStrings(subcompletion, tag);
@@ -104,17 +99,22 @@ namespace DracarysInteractive.AIStudio
                         }
                     }
 
-                    Log($"OnChatCompletion: subcompletion after tag processing: {subcompletion}");
+                    if (npc != null)
+                    {
+                        Log($"OnChatCompletion: subcompletion after tag processing: {subcompletion}");
 
-                    subcompletion = StringHelper.filterSubcompletion(subcompletion);
+                        subcompletion = StringHelper.filterSubcompletion(subcompletion);
 
-                    Log($"OnChatCompletion: subcompletion after filtering: {subcompletion}");
+                        Log($"OnChatCompletion: subcompletion after filtering: {subcompletion}");
 
-                    string[] actions = StringHelper.ExtractStringsInParentheses(subcompletion);
+                        string[] actions = StringHelper.ExtractStringsInParentheses(subcompletion);
 
-                    Log($"OnChatCompletion: Speak: {subcompletion}");
+                        Log($"OnChatCompletion: Speak: {subcompletion}");
 
-                    DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions));
+                        DialogueActionManager.Instance.EnqueueAction(new Speak(npc, subcompletion, actions));
+                    }
+                    else
+                        Log($"OnChatCompletion: null npc, name={name}");
                 }
 
                 if (!DialogueManager.Instance.HasPlayer)
