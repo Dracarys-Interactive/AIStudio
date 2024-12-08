@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DracarysInteractive.AIStudio
@@ -167,12 +168,43 @@ namespace DracarysInteractive.AIStudio
                 return new string[0];
             }
 
-            string[] lines = text.Split(new[] { "\\n", "\\r" }, StringSplitOptions.None);
+            List<string> lines = new List<string>();
+            StringBuilder currentLine = new StringBuilder();
+            bool insideQuotes = false;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+
+                if (c == '"')
+                {
+                    insideQuotes = !insideQuotes; // Toggle the insideQuotes flag
+                }
+
+                if (!insideQuotes && c == '\n')
+                {
+                    // We are at a newline character and not inside quotes, finalize the current line
+                    if (currentLine.Length > 0)
+                    {
+                        lines.Add(currentLine.ToString());
+                        currentLine.Clear();
+                    }
+                }
+                else
+                {
+                    // Append current character to the current line
+                    currentLine.Append(c);
+                }
+            }
+
+            // Add the last line if exists
+            if (currentLine.Length > 0)
+            {
+                lines.Add(currentLine.ToString());
+            }
 
             // Use LINQ to filter out empty entries
-            string[] nonEmptyLines = lines.Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
-
-            return nonEmptyLines;
+            return lines.Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
         }
 
         public static string Replace(string text, Dictionary<string, string> fromToMap)
