@@ -23,7 +23,7 @@ namespace DracarysInteractive.AIStudio
         {
             Implementation.OnStartSpeechRecognition(character);
         }
-        void OnStartSpeaking(DialogueCharacter character)
+        void OnStartSpeaking(DialogueCharacter character, string text)
         {
             Implementation.OnStartSpeechRecognition(character);
         }

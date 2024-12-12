@@ -6,7 +6,7 @@ namespace DracarysInteractive.AIStudio
 {
     public class DialogueCharacter : MonoBehaviour
     {
-        public static UnityEvent<DialogueCharacter> onStartSpeaking = new UnityEvent<DialogueCharacter>();
+        public static UnityEvent<DialogueCharacter, string> onStartSpeaking = new UnityEvent<DialogueCharacter, string>();
         public static UnityEvent<DialogueCharacter> onEndSpeaking = new UnityEvent<DialogueCharacter>();
         public static UnityEvent<DialogueCharacter> onStartSpeechRecognition = new UnityEvent<DialogueCharacter>();
         public static UnityEvent<DialogueCharacter> onSpeechRecognized = new UnityEvent<DialogueCharacter>();
@@ -46,7 +46,7 @@ namespace DracarysInteractive.AIStudio
                 animator.OnEndSpeaking(this, speaker);
         }
 
-        private void OnStartSpeaking(DialogueCharacter speaker)
+        private void OnStartSpeaking(DialogueCharacter speaker, string text)
         {
             foreach (IDialogueCharacterAnimator animator in _animators)
                 animator.OnStartSpeaking(this, speaker);
@@ -74,7 +74,7 @@ namespace DracarysInteractive.AIStudio
 
         public void OnStartSpeaking(string text, string[] actions)
         {
-            onStartSpeaking.Invoke(this);
+            onStartSpeaking.Invoke(this, text);
 
             foreach (IDialogueCharacterAnimator animator in _animators)
                 animator.AnimateActions(this, actions);

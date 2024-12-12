@@ -209,12 +209,50 @@ namespace DracarysInteractive.AIStudio
 
         public static string Replace(string text, Dictionary<string, string> fromToMap)
         {
-            foreach(string key in fromToMap.Keys)
+            foreach (string key in fromToMap.Keys)
             {
                 text = text.Replace(key, fromToMap[key]);
             }
 
             return text;
+        }
+
+        public static string[] Wrap(string text, int wrapBreak)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return Array.Empty<string>();
+
+            if (wrapBreak <= 0)
+                throw new ArgumentException("wrapBreak must be greater than 0.", nameof(wrapBreak));
+
+            var result = new List<string>();
+            int start = 0;
+
+            while (start < text.Length)
+            {
+                int end = Math.Min(start + wrapBreak, text.Length);
+
+                // Look for the last whitespace before wrapBreak
+                if (end < text.Length && !char.IsWhiteSpace(text[end]))
+                {
+                    int lastSpace = text.LastIndexOf(' ', end - 1, end - start);
+                    if (lastSpace != -1)
+                    {
+                        end = lastSpace;
+                    }
+                }
+
+                result.Add(text.Substring(start, end - start).Trim());
+                start = end;
+
+                // Skip consecutive whitespace
+                while (start < text.Length && char.IsWhiteSpace(text[start]))
+                {
+                    start++;
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }
