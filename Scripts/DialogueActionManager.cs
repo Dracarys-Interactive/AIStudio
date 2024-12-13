@@ -27,7 +27,7 @@ namespace DracarysInteractive.AIStudio
             get { return _queue.Count > 0; }
         }
 
-        private bool actionRunning
+        public bool actionRunning
         {
             get
             {
