@@ -104,7 +104,7 @@ namespace DracarysInteractive.AIStudio
 
         public static string filterSubcompletion(string subcompletion)
         {
-            return subcompletion.Replace("\\n", " ").Replace("\\", "");
+            return Regex.Replace(subcompletion.Replace("\\n", " ").Replace("\n", " ").Replace("\\", ""), @"\s+", " ");
         }
 
         public static string Remove(string completion, string regex)
