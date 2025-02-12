@@ -167,6 +167,7 @@ namespace DracarysInteractive.AIStudio
 #endif
         }
 
+#if CMS_SALSA
         void Update()
         {
             Eyes eyes = GetComponent<Eyes>();
@@ -174,5 +175,6 @@ namespace DracarysInteractive.AIStudio
             if (eyes && lookAtTransform)
                 eyes.lookTarget = lookAtTransform;
         }
+#endif
     }
 }
