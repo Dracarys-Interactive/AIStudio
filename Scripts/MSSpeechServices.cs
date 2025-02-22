@@ -137,13 +137,16 @@ namespace DracarysInteractive.AIStudio
             return voices;
         }
 
-        public async void Speak(string text, string voice, Action<float[]> onDataReceived, Action onSynthesisCompleted)
+        public async void Speak(string text, string ssml, Action<float[]> onDataReceived, Action onSynthesisCompleted)
         {
-            SpeechSynthesizer synthesizer = GetSpeechSynthesizer(voice);
+            SpeechSynthesizer synthesizer = GetSpeechSynthesizer(ssml);
+
+            ssml = ssml.Replace("^text^", text);
+            SpeechServices.Instance.Log($"SSML: {ssml}");
 
             if (stream)
             {
-                using (SpeechSynthesisResult result = await synthesizer.StartSpeakingTextAsync(text))
+                using (SpeechSynthesisResult result = await synthesizer.StartSpeakingSsmlAsync(ssml))
                 {
                     using (var audioDataStream = AudioDataStream.FromResult(result))
                     {
@@ -159,7 +162,7 @@ namespace DracarysInteractive.AIStudio
             }
             else
             {
-                Task<SpeechSynthesisResult> task = GetSpeechSynthesizer(voice).SpeakTextAsync(text);
+                Task<SpeechSynthesisResult> task = GetSpeechSynthesizer(ssml).SpeakSsmlAsync(ssml);
                 task.Wait();
                 onDataReceived(createAudioClipData(task.Result.AudioData, (uint)task.Result.AudioData.Length));
             }
@@ -238,13 +241,14 @@ namespace DracarysInteractive.AIStudio
             await recognizer.StopContinuousRecognitionAsync();
         }
 
-        private SpeechSynthesizer GetSpeechSynthesizer(string voice)
+        private SpeechSynthesizer GetSpeechSynthesizer(string ssml)
         {
-            if (!synthesizers.ContainsKey(voice))
+            if (!synthesizers.ContainsKey(ssml))
             {
                 SpeechConfig config = getConfig();
 
-                config.SpeechSynthesisVoiceName = voice;
+                // config.SpeechSynthesisVoiceName = voice;
+
 
                 // The default format is RIFF, which has a riff header.
                 // We are playing the audio in memory as audio clip, which doesn't require riff header.
@@ -262,10 +266,10 @@ namespace DracarysInteractive.AIStudio
                     SpeechServices.Instance.Log(message, SpeechServices.LogLevel.error);
                 };
 
-                synthesizers[voice] = synthesizer;
+                synthesizers[ssml] = synthesizer;
             }
 
-            return synthesizers[voice];
+            return synthesizers[ssml];
         }
 
         private static float[] createAudioClipData(byte[] audioChunkBytes, uint length)

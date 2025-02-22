@@ -18,7 +18,7 @@ namespace DracarysInteractive.AIStudio
             {
                 text = StringHelper.RemoveTaggedStrings(text, tag);
             }
-            SpeechServices.Instance.Speak(text, data.character.character.voice, playAudio, onSynthesisCompleted);
+            SpeechServices.Instance.Speak(text, data.character.character.SSML, playAudio, onSynthesisCompleted);
         }
 
         private void playAudio(float[] result)
