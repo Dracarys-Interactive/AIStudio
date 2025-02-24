@@ -153,21 +153,21 @@ namespace DracarysInteractive.AIStudio
                         byte[] buffer = new byte[(uint)sampleRate];
                         uint filledSize = 0;
 
-                        while ((filledSize = audioDataStream.ReadData(buffer)) > 0)
+                        while ((filledSize = await Task.Run(() => audioDataStream.ReadData(buffer))) > 0)
                         {
-                            onDataReceived(createAudioClipData(buffer, filledSize));
+                            onDataReceived.Invoke(createAudioClipData(buffer, filledSize));
+                            await Task.Yield();
                         }
                     }
                 }
             }
             else
             {
-                Task<SpeechSynthesisResult> task = GetSpeechSynthesizer(ssml).SpeakSsmlAsync(ssml);
-                task.Wait();
-                onDataReceived(createAudioClipData(task.Result.AudioData, (uint)task.Result.AudioData.Length));
+                SpeechSynthesisResult result = await GetSpeechSynthesizer(ssml).SpeakSsmlAsync(ssml);
+                onDataReceived.Invoke(createAudioClipData(result.AudioData, (uint)result.AudioData.Length));
             }
 
-            onSynthesisCompleted();
+            onSynthesisCompleted.Invoke();
         }
 
         public async void Recognize(Action onStartSpeechRecognition, Action<string> onSpeechRecognized, Action onSpeechNotRecognized)
