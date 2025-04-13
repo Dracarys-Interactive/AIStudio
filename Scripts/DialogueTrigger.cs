@@ -11,8 +11,8 @@ namespace DracarysInteractive.AIStudio
         {
             if (!Triggered)
             {
-                DialogueManager.Instance.StartDialogue(dialogue);
                 Triggered = true;
+                DialogueManager.Instance.StartDialogue(dialogue);
             }
         }
 

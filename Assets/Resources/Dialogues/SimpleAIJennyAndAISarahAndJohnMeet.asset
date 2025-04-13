@@ -18,10 +18,11 @@ MonoBehaviour:
     conversation is the three characters are attending a technical conference on
     AI and discussing the proceedings. \r\nUse the character name followed by a colon
     as the prompt separator."
-  player: {fileID: 11400000, guid: 1be0785de93ae5841ab15cdee7279bfa, type: 2}
+  player: {fileID: 11400000, guid: d1dfaafd172178845b3230afd12ffd88, type: 2}
   nonPlayerCharacters:
   - {fileID: 11400000, guid: a9b9e59fbed1f404898c71d43cf50d3a, type: 2}
   - {fileID: 11400000, guid: ef9493f049da6fd4fb0aabaa7d82b78e, type: 2}
   initialPrompt: 
   closingPrompt: 
   closingPromptDelay: 0
+  nextScene: 

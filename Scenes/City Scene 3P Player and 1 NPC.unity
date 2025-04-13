@@ -428,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c2328e2cf779140b4871a07f84e7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apikey: 
   model: gpt-4o
   async: 0
   messages: []
@@ -16411,7 +16412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57161ce16ec2224782891f66f9c3c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 1be0785de93ae5841ab15cdee7279bfa, type: 2}
+  character: {fileID: 11400000, guid: d1dfaafd172178845b3230afd12ffd88, type: 2}
   transcript: {fileID: 721661884}
   lookAtTarget: {fileID: 2167392455841208354}
   usePlayerVoice: 0
@@ -22940,7 +22941,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2167392457651692236}
-  m_LocalRotation: {x: 0.02727297, y: -0.1225909, z: 0.0009425194, w: 0.9920821}
+  m_LocalRotation: {x: 0.027272932, y: -0.1225909, z: 0.00094251824, w: 0.9920821}
   m_LocalPosition: {x: -0.10225469, y: 0.000000007720018, z: 0}
   m_LocalScale: {x: 1.0078583, y: 1.0078585, z: 1.007859}
   m_ConstrainProportionsScale: 0

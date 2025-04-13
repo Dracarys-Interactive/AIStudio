@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b2429215e880d47a7f02a6242361b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 1
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecb829c2e4657f498c656c0facab3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 1
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35de2bf7d9ffcb342826a22aea56fc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 0
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -431,6 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c2328e2cf779140b4871a07f84e7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apikey: 
   model: gpt-4o
   async: 0
   messages: []
@@ -496,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8980d81775e5f84da432ff247d8bf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logLevel: 3
+  _logLevel: 0
   _destroyOnLoad: 1
   _console: {fileID: 0}
   _consoleLogLevel: 3
@@ -938,6 +939,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 832850d0cd76d8b4c92c60c7a2951894, type: 3}
+--- !u!4 &1166833442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6572921457457296220, guid: 832850d0cd76d8b4c92c60c7a2951894, type: 3}
+  m_PrefabInstance: {fileID: 1166833441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1232115126
 GameObject:
   m_ObjectHideFlags: 0
@@ -25875,7 +25881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57161ce16ec2224782891f66f9c3c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 1be0785de93ae5841ab15cdee7279bfa, type: 2}
+  character: {fileID: 11400000, guid: d1dfaafd172178845b3230afd12ffd88, type: 2}
   transcript: {fileID: 1546560688}
   lookAtTarget: {fileID: 5230619658045368797}
   usePlayerVoice: 0
@@ -28711,7 +28717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595bbda5e3b5e204da326427680d8628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destination: {fileID: 0}
+  _destination: {fileID: 1166833442}
   OnMovement:
     m_PersistentCalls:
       m_Calls: []

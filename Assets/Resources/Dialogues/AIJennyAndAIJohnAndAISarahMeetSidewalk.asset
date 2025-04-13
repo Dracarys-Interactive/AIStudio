@@ -37,12 +37,12 @@ MonoBehaviour:
   nonPlayerCharacters:
   - {fileID: 11400000, guid: ef9493f049da6fd4fb0aabaa7d82b78e, type: 2}
   - {fileID: 11400000, guid: a9b9e59fbed1f404898c71d43cf50d3a, type: 2}
-  - {fileID: 11400000, guid: 1be0785de93ae5841ab15cdee7279bfa, type: 2}
+  - {fileID: 11400000, guid: d1dfaafd172178845b3230afd12ffd88, type: 2}
   initialPrompt: 'John: Jenny, nice to meet you!'
-  closingPrompt: 'John: (excited) Sorry, but I have to run to the next session!\n\nJenny:
-    (nodding) No worries, nice to meet you John!\n\nSarah: I''ll go with you Professor!\n\nJohn:
-    (moves toward Conference Center) Great, let''s go Sarah. Goodbye Jenny!!!\n\nSarah:
-    (moves toward Conference Center) Bye Jenny!\n\nJenny: (moves toward Hot Dog Stand)
-    Think I''ll get a Hot Dog.\n\nJohn: Follow me Sarah!'
-  closingPromptDelay: 30
+  closingPrompt: 'John: (excited) Sorry, but I have to run to the next session! Jenny:
+    (nodding) No worries, nice to meet you John! Sarah: I''ll go with you Professor!
+    John: (moves toward Conference Center) Great, let''s go Sarah. Goodbye Jenny!!!
+    Sarah: (moves toward Conference Center) Bye Jenny! Jenny: (moves toward Hot Dog
+    Stand) Think I''ll get a Hot Dog. John: Follow me Sarah!'
+  closingPromptDelay: 10
   nextScene: DI End
