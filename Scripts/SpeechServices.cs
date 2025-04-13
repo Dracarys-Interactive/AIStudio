@@ -55,10 +55,10 @@ namespace DracarysInteractive.AIStudio
             recognize = true;
         }
 
-        public void Speak(string text, string voice, Action<float[]> onDataReceived, Action onSynthesisCompleted)
+        public void Speak(string text, string ssml, Action<float[]> onDataReceived, Action onSynthesisCompleted)
         {
             Log($"Speak: {text}");
-            Implementation.Speak(text, voice, onDataReceived, onSynthesisCompleted);
+            Implementation.Speak(text, ssml, onDataReceived, onSynthesisCompleted);
         }
         public float SampleRate()
         {
